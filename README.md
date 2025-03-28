@@ -1,4 +1,4 @@
-# companion-module-[replace with module name]
+# companion-module-eyevinn-intercom
 
 See [HELP.md](./companion/HELP.md) and [LICENSE](./LICENSE)
 

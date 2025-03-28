@@ -1,7 +1,7 @@
 {
-	"id": "your-module-name",
-	"name": "your-module-name",
-	"shortname": "module-shortname",
+	"id": "eyevinn-intercom",
+	"name": "eyevinn-intercom",
+	"shortname": "eyevinn-intercom",
 	"description": "A short one line description of your module",
 	"version": "0.0.0",
 	"license": "MIT",
@@ -9,8 +9,12 @@
 	"bugs": "https://github.com/bitfocus/companion-module-your-module-name/issues",
 	"maintainers": [
 		{
-			"name": "Your name",
-			"email": "Your email"
+			"name": "Sandra Larsson",
+			"email": "sandra.larsson@eyevinn.se"
+		},
+		{
+			"name": "Lucas Maupin",
+			"email": "lucas.maupin@eyevinn.se"
 		}
 	],
 	"runtime": {
@@ -20,7 +24,7 @@
 		"entrypoint": "../dist/main.js"
 	},
 	"legacyIds": [],
-	"manufacturer": "Your company",
-	"products": ["Your product"],
+	"manufacturer": "eyevinn",
+	"products": ["intercom"],
 	"keywords": []
 }
