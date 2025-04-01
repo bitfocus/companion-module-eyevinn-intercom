@@ -1,72 +1,68 @@
 import { CompanionActionDefinition } from '@companion-module/base'
 import type { ModuleInstance } from './main.js'
 
-export function UpdateActions(self: ModuleInstance): void {
-	const actions: { [key: string]: CompanionActionDefinition } = {
-		sample_action: {
-			name: 'My First Action Test',
-			options: [
-				{
-					id: 'num',
-					type: 'number',
-					label: 'Test',
-					default: 5,
-					min: 0,
-					max: 100,
-				},
-			],
-			callback: async (event) => {
-				console.log('Hello world!', event.options.num)
-			},
-		},
+export enum ActionTypes {
+	ToggleInputMute = 'toggle_input_mute',
+	ToggleOutputMute = 'toggle_output_mute',
+	ToggleGlobalMute = 'toggle_global_mute',
+	IncreaseVolume = 'increase_volume',
+	DecreaseVolume = 'decrease_volume',
+	PushToTalk = 'push_to_talk',
+}
 
-		toggle_input_mute: {
+export type ActionMessage = {
+	action: ActionTypes
+}
+
+export function UpdateActions(self: ModuleInstance): void {
+	const actions: { [key in ActionTypes]: CompanionActionDefinition } = {
+		[ActionTypes.ToggleInputMute]: {
 			name: 'Toggle input mute',
 			options: [],
 			callback: async () => {
-				self.sendToFrontend({
-					action: 'toggle_input_mute',
+				self.emitMessage({
+					action: ActionTypes.ToggleInputMute,
 				})
 			},
 		},
 
-		toggle_output_mute: {
+		[ActionTypes.ToggleOutputMute]: {
 			name: 'Toggle output mute',
 			options: [],
 			callback: async () => {
-				self.sendToFrontend({ action: 'toggle_output_mute' })
+				self.emitMessage({ action: ActionTypes.ToggleOutputMute })
 			},
 		},
 
-		increase_volume: {
+		[ActionTypes.IncreaseVolume]: {
 			name: 'Increase volume',
 			options: [],
 			callback: async () => {
-				self.sendToFrontend({ action: 'increase_volume' })
+				self.emitMessage({ action: ActionTypes.IncreaseVolume })
 			},
 		},
 
-		decrease_volume: {
+		[ActionTypes.DecreaseVolume]: {
 			name: 'Volume down',
 			options: [],
 			callback: async () => {
-				self.sendToFrontend({ action: 'decrease_volume' })
+				self.emitMessage({ action: ActionTypes.DecreaseVolume })
 			},
 		},
 
-		push_to_talk: {
+		[ActionTypes.PushToTalk]: {
 			name: 'Push to talk',
 			options: [],
 			callback: async () => {
-				self.sendToFrontend({ action: 'push_to_talk' })
+				self.emitMessage({ action: ActionTypes.PushToTalk })
 			},
 		},
 
-		toggle_global_mute: {
+		[ActionTypes.ToggleGlobalMute]: {
 			name: 'Toggle global mute',
 			options: [],
 			callback: async () => {
-				self.sendToFrontend({ action: 'toggle_global_mute' })
+				self.emitMessage({ action: ActionTypes.ToggleGlobalMute })
 			},
 		},
 	}

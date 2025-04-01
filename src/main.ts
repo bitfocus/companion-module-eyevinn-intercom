@@ -1,5 +1,5 @@
 import { InstanceBase, InstanceStatus, runEntrypoint, SomeCompanionConfigField } from '@companion-module/base'
-import { UpdateActions } from './actions.js'
+import { ActionMessage, UpdateActions } from './actions.js'
 import { GetConfigFields, ModuleConfig } from './config.js'
 import { UpdateFeedbacks } from './feedbacks.js'
 import { UpgradeScripts } from './upgrades.js'
@@ -10,7 +10,7 @@ import WebSocket, { WebSocketServer } from 'ws'
 export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	config!: ModuleConfig
 
-	private wss: WebSocketServer | undefined
+	private wss: WebSocketServer
 	private clients: Set<WebSocket> = new Set()
 
 	constructor(internal: unknown) {
@@ -21,7 +21,6 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		this.config = config
 
 		this.startWebSocketServer()
-
 		this.updateActions()
 		this.updateFeedbacks()
 		this.updateVariableDefinitions()
@@ -31,10 +30,15 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 	// Start WebSocket server
 	private startWebSocketServer(): void {
+		if (!this.config) {
+			return
+		}
+
 		const port = parseInt(this.config.port || '12345', 10)
 
 		if (this.wss) {
 			this.wss.close()
+			this.log('info', 'Closing existing WebSocket server')
 		}
 
 		this.wss = new WebSocketServer({ port })
@@ -53,12 +57,12 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		})
 
 		this.wss.on('error', (err) => {
-			this.log('error', `WebSocket error: ${err.message}`)
+			this.log('error', `WebSocket server error: ${err.message}`)
 		})
 	}
 
-	// Send data to all connected frontend clients
-	public sendToFrontend(data: unknown): void {
+	// Send data to all connected clients
+	public emitMessage(data: ActionMessage): void {
 		const message = JSON.stringify(data)
 
 		for (const ws of this.clients) {
@@ -80,6 +84,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 		if (this.wss) {
 			this.wss.close()
+			this.log('info', 'Closing WebSocket server')
 			this.clients.clear()
 		}
 	}
