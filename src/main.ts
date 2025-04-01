@@ -6,11 +6,12 @@ import { UpgradeScripts } from './upgrades.js'
 import { UpdateVariableDefinitions } from './variables.js'
 
 import WebSocket, { WebSocketServer } from 'ws'
+import { UpdatePresets } from './presets.js'
 
 export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	config!: ModuleConfig
 
-	private wss: WebSocketServer
+	private wss?: WebSocketServer
 	private clients: Set<WebSocket> = new Set()
 
 	constructor(internal: unknown) {
@@ -24,6 +25,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		this.updateActions()
 		this.updateFeedbacks()
 		this.updateVariableDefinitions()
+		this.updatePresets()
 
 		this.updateStatus(InstanceStatus.Ok)
 	}
@@ -104,6 +106,10 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 	updateVariableDefinitions(): void {
 		UpdateVariableDefinitions(this)
+	}
+
+	updatePresets(): void {
+		UpdatePresets(this)
 	}
 }
 

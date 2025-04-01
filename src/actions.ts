@@ -1,4 +1,4 @@
-import { CompanionActionDefinition } from '@companion-module/base'
+import { CompanionActionDefinition, CompanionActionEvent, InputValue } from '@companion-module/base'
 import type { ModuleInstance } from './main.js'
 
 export enum ActionTypes {
@@ -12,49 +12,97 @@ export enum ActionTypes {
 
 export type ActionMessage = {
 	action: ActionTypes
+	index?: InputValue
 }
 
 export function UpdateActions(self: ModuleInstance): void {
 	const actions: { [key in ActionTypes]: CompanionActionDefinition } = {
 		[ActionTypes.ToggleInputMute]: {
 			name: 'Toggle input mute',
-			options: [],
-			callback: async () => {
+			options: [
+				{
+					id: 'channelIndex',
+					type: 'number',
+					label: 'Channel',
+					default: 1,
+					min: 1,
+					max: 10,
+				},
+			],
+			callback: async (action: CompanionActionEvent) => {
 				self.emitMessage({
 					action: ActionTypes.ToggleInputMute,
+					index: action.options.channelIndex,
 				})
+				console.log(action.options.channelIndex)
 			},
 		},
 
 		[ActionTypes.ToggleOutputMute]: {
 			name: 'Toggle output mute',
-			options: [],
-			callback: async () => {
-				self.emitMessage({ action: ActionTypes.ToggleOutputMute })
+			options: [
+				{
+					id: 'channelIndex',
+					type: 'number',
+					label: 'Channel',
+					default: 1,
+					min: 1,
+					max: 10,
+				},
+			],
+			callback: async (action: CompanionActionEvent) => {
+				self.emitMessage({ action: ActionTypes.ToggleOutputMute, index: action.options.channelIndex })
 			},
 		},
 
 		[ActionTypes.IncreaseVolume]: {
 			name: 'Increase volume',
-			options: [],
-			callback: async () => {
-				self.emitMessage({ action: ActionTypes.IncreaseVolume })
+			options: [
+				{
+					id: 'channelIndex',
+					type: 'number',
+					label: 'Channel',
+					default: 1,
+					min: 1,
+					max: 10,
+				},
+			],
+			callback: async (action: CompanionActionEvent) => {
+				self.emitMessage({ action: ActionTypes.IncreaseVolume, index: action.options.channelIndex })
 			},
 		},
 
 		[ActionTypes.DecreaseVolume]: {
 			name: 'Volume down',
-			options: [],
-			callback: async () => {
-				self.emitMessage({ action: ActionTypes.DecreaseVolume })
+			options: [
+				{
+					id: 'channelIndex',
+					type: 'number',
+					label: 'Channel',
+					default: 1,
+					min: 1,
+					max: 10,
+				},
+			],
+			callback: async (action: CompanionActionEvent) => {
+				self.emitMessage({ action: ActionTypes.DecreaseVolume, index: action.options.channelIndex })
 			},
 		},
 
 		[ActionTypes.PushToTalk]: {
 			name: 'Push to talk',
-			options: [],
-			callback: async () => {
-				self.emitMessage({ action: ActionTypes.PushToTalk })
+			options: [
+				{
+					id: 'channelIndex',
+					type: 'number',
+					label: 'Channel',
+					default: 1,
+					min: 1,
+					max: 10,
+				},
+			],
+			callback: async (action: CompanionActionEvent) => {
+				self.emitMessage({ action: ActionTypes.PushToTalk, index: action.options.channelIndex })
 			},
 		},
 
