@@ -1,11 +1,8 @@
-dist/
 node_modules/
 package-lock.json
-yarn-error.log
-yarn.lock
-.vscode/
-.idea/
-.DS_Store
-*.log
-*.env
-*.env.local
+/pkg
+/pkg.tgz
+/dist
+DEBUG-*
+/.yarn
+.yarn/install-state.gz

@@ -2,29 +2,29 @@
 	"id": "eyevinn-intercom",
 	"name": "eyevinn-intercom",
 	"shortname": "eyevinn-intercom",
-	"description": "A short one line description of your module",
+	"description": "Eyevinn Intercom module for Companion",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/bitfocus/companion-module-your-module-name.git",
-	"bugs": "https://github.com/bitfocus/companion-module-your-module-name/issues",
+	"repository": "git+https://github.com/Eyevinn/companion-module-eyevinn-intercom.git",
+	"bugs": "https://github.com/Eyevinn/companion-module-eyevinn-intercom/issues",
 	"maintainers": [
-		{
-			"name": "Sandra Larsson",
-			"email": "sandra.larsson@eyevinn.se"
-		},
 		{
 			"name": "Lucas Maupin",
 			"email": "lucas.maupin@eyevinn.se"
+		},
+		{
+			"name": "Phillip Ivan Pietruschka",
+			"email": "ivanpietruschka@gmail.com"
 		}
 	],
+	"legacyIds": [],
 	"runtime": {
 		"type": "node22",
 		"api": "nodejs-ipc",
 		"apiVersion": "0.0.0",
 		"entrypoint": "../dist/main.js"
 	},
-	"legacyIds": [],
-	"manufacturer": "eyevinn",
-	"products": ["intercom"],
-	"keywords": []
+	"manufacturer": "Eyevinn",
+	"products": ["Intercom"],
+	"keywords": ["eyevinn", "intercom"]
 }
