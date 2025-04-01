@@ -7,7 +7,7 @@
 		"postinstall": "husky",
 		"format": "prettier -w .",
 		"package": "run build && companion-module-build",
-		"build": "rimraf dist && run build:main",
+		"build": "rimraf dist && yarn build:main",
 		"build:main": "tsc -p tsconfig.build.json",
 		"dev": "yarn build:watch",
 		"build:watch": "tsc -p tsconfig.json --watch",
@@ -20,11 +20,13 @@
 		"url": "git+https://github.com/bitfocus/companion-module-your-module-name.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.11.3"
+		"@companion-module/base": "~1.11.3",
+		"ws": "^8.18.1"
 	},
 	"devDependencies": {
 		"@companion-module/tools": "^2.2.2",
 		"@types/node": "^22.10.2",
+		"@types/ws": "^8.18.1",
 		"eslint": "^9.17.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^15.2.11",
@@ -42,5 +44,5 @@
 			"yarn lint:raw --fix"
 		]
 	},
-	"packageManager": "yarn@4.5.3"
+	"packageManager": "yarn@4.7.0"
 }
