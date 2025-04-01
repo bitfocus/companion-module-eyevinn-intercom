@@ -1,7 +1,7 @@
 {
 	"id": "eyevinn-intercom",
-	"name": "eyevinn-intercom",
-	"shortname": "eyevinn-intercom",
+	"name": "Intercom",
+	"shortname": "Intercom",
 	"description": "Eyevinn Intercom module for Companion",
 	"version": "0.0.0",
 	"license": "MIT",
