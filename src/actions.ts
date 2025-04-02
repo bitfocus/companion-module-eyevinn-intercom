@@ -2,6 +2,7 @@ import { CompanionActionDefinition, CompanionActionEvent, InputValue } from '@co
 import type { ModuleInstance } from './main.js'
 
 export enum ActionTypes {
+	OpenIntercom = 'open_intercom',
 	ToggleInputMute = 'toggle_input_mute',
 	ToggleOutputMute = 'toggle_output_mute',
 	ToggleGlobalMute = 'toggle_global_mute',
@@ -17,6 +18,18 @@ export type ActionMessage = {
 
 export function UpdateActions(self: ModuleInstance): void {
 	const actions: { [key in ActionTypes]: CompanionActionDefinition } = {
+		[ActionTypes.OpenIntercom]: {
+			name: 'Open Intercom',
+			options: [],
+			callback: async () => {
+				return fetch('https://intercom-dev.app.eyevinn.technology/').then(
+					() => console.info('Successfully opened Intercom'),
+					() => {
+						console.error('Unsuccessfully opened Intercom')
+					},
+				)
+			},
+		},
 		[ActionTypes.ToggleInputMute]: {
 			name: 'Toggle input mute',
 			options: [
@@ -34,7 +47,6 @@ export function UpdateActions(self: ModuleInstance): void {
 					action: ActionTypes.ToggleInputMute,
 					index: action.options.channelIndex,
 				})
-				console.log(action.options.channelIndex)
 			},
 		},
 
