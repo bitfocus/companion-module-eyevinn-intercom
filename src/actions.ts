@@ -123,6 +123,10 @@ export function UpdateActions(self: ModuleInstance): void {
 			options: [],
 			callback: async () => {
 				self.emitMessage({ action: ActionTypes.ToggleGlobalMute })
+				self.setVariableValues({
+					globalMute: !self.getVariableValue('globalMute'),
+				})
+				self.checkFeedbacks('ChannelState')
 			},
 		},
 	}
