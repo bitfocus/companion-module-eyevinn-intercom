@@ -1,5 +1,6 @@
 import { CompanionActionDefinition, CompanionActionEvent, InputValue } from '@companion-module/base'
 import type { ModuleInstance } from './main.js'
+import open from 'open'
 
 export enum ActionTypes {
 	OpenIntercom = 'open_intercom',
@@ -16,18 +17,31 @@ export type ActionMessage = {
 	index?: InputValue
 }
 
+export const defaultOpenUrl = 'https://intercom-dev.app.eyevinn.technology/'
+
 export function UpdateActions(self: ModuleInstance): void {
 	const actions: { [key in ActionTypes]: CompanionActionDefinition } = {
 		[ActionTypes.OpenIntercom]: {
 			name: 'Open Intercom',
-			options: [],
-			callback: async () => {
-				return fetch('https://intercom-dev.app.eyevinn.technology/').then(
-					() => console.info('Successfully opened Intercom'),
-					() => {
-						console.error('Unsuccessfully opened Intercom')
-					},
-				)
+			options: [
+				{
+					id: 'url',
+					type: 'textinput',
+					label: 'URL',
+					default: defaultOpenUrl,
+					required: true,
+				},
+			],
+			callback: async (action: CompanionActionEvent) => {
+				const URL = action.options.url?.toString()
+				if (URL) {
+					return open(URL).then(
+						() => console.info('Successfully opened Intercom'),
+						() => {
+							console.error('Unsuccessfully opened Intercom')
+						},
+					)
+				}
 			},
 		},
 		[ActionTypes.ToggleInputMute]: {
