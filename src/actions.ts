@@ -57,6 +57,8 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (action: CompanionActionEvent) => {
+				const channelIndex = action.options.channelIndex?.toString()
+				if (!channelIndex) return
 				self.emitMessage({
 					action: ActionTypes.ToggleInputMute,
 					index: action.options.channelIndex,
@@ -137,10 +139,6 @@ export function UpdateActions(self: ModuleInstance): void {
 			options: [],
 			callback: async () => {
 				self.emitMessage({ action: ActionTypes.ToggleGlobalMute })
-				self.setVariableValues({
-					globalMute: !self.getVariableValue('globalMute'),
-				})
-				self.checkFeedbacks('ChannelState')
 			},
 		},
 	}

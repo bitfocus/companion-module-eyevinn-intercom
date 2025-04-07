@@ -7,6 +7,7 @@ import { UpdateVariableDefinitions } from './variables.js'
 
 import WebSocket, { WebSocketServer } from 'ws'
 import { UpdatePresets } from './presets.js'
+import { handleMessage } from './messageHandler.js'
 
 export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	config!: ModuleConfig
@@ -52,6 +53,10 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 			ws.on('close', () => {
 				this.clients.delete(ws)
 			})
+
+			ws.on('message', (msg) => {
+				handleMessage(this, JSON.parse(msg.toString()))
+			})
 		})
 
 		this.wss.on('listening', () => {
@@ -65,6 +70,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 	// Send data to all connected clients
 	public emitMessage(data: ActionMessage): void {
+		console.log('SENDING MESSAge')
 		const message = JSON.stringify(data)
 
 		for (const ws of this.clients) {

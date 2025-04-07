@@ -3,13 +3,15 @@ import { ModuleInstance } from './main.js'
 import { ActionTypes, defaultOpenUrl } from './actions.js'
 import {
 	decreaseVolumeIcon,
-	globalMutedInputIcon,
-	globalUnmutedInputIcon,
 	increaseVolumeIcon,
+	mutedInputIcon,
+	mutedOutputIcon,
 	PTTEnabledIcon,
 	unmutedInputIcon,
 	unmutedOutputIcon,
 } from './icons.js'
+import { Feedbacks } from './feedbacks.js'
+import { Variables } from './variables.js'
 
 export enum GlobalPresetCategories {
 	GlobalButtons = 'Global Buttons',
@@ -65,18 +67,19 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Toggle Input Mute',
 			type: 'button',
 			style: {
-				text: '',
-				size: '18',
-				png64: globalUnmutedInputIcon,
+				text: 'Global',
+				size: '14',
+				alignment: 'right:top',
+				png64: unmutedInputIcon,
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
 			},
 			feedbacks: [
 				{
-					feedbackId: 'ChannelState',
-					options: {},
+					feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
+					options: { variableId: Variables.GLOBAL_MUTE },
 					style: {
-						png64: globalMutedInputIcon,
+						png64: mutedInputIcon,
 					},
 				},
 			],
@@ -106,11 +109,19 @@ export function UpdatePresets(self: ModuleInstance): void {
 				size: '14',
 				png64: unmutedInputIcon,
 				pngalignment: 'center:center',
-				alignment: 'right:bottom',
+				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
 			},
-			feedbacks: [],
+			feedbacks: [
+				{
+					feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
+					options: { variableId: Variables.CHANNEL_X_INPUT_MUTE.replace('X', index.toString()) },
+					style: {
+						png64: mutedInputIcon,
+					},
+				},
+			],
 			steps: [
 				{
 					down: [
@@ -132,11 +143,19 @@ export function UpdatePresets(self: ModuleInstance): void {
 				size: '14',
 				png64: unmutedOutputIcon,
 				pngalignment: 'center:center',
-				alignment: 'right:bottom',
+				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
 			},
-			feedbacks: [],
+			feedbacks: [
+				{
+					feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
+					options: { variableId: Variables.CHANNEL_X_OUTPUT_MUTE.replace('X', index.toString()) },
+					style: {
+						png64: mutedOutputIcon,
+					},
+				},
+			],
 			steps: [
 				{
 					down: [
@@ -158,7 +177,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 				size: '14',
 				png64: PTTEnabledIcon,
 				pngalignment: 'center:center',
-				alignment: 'right:bottom',
+				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
 			},
@@ -184,7 +203,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 				size: '14',
 				png64: increaseVolumeIcon,
 				pngalignment: 'center:center',
-				alignment: 'right:bottom',
+				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
 			},
@@ -210,7 +229,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 				size: '14',
 				png64: decreaseVolumeIcon,
 				pngalignment: 'center:center',
-				alignment: 'right:bottom',
+				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
 			},
