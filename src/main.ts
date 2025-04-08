@@ -70,7 +70,6 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 	// Send data to all connected clients
 	public emitMessage(data: ActionMessage): void {
-		console.log('SENDING MESSAge')
 		const message = JSON.stringify(data)
 
 		for (const ws of this.clients) {

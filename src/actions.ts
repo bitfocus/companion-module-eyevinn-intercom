@@ -9,7 +9,8 @@ export enum ActionTypes {
 	ToggleGlobalMute = 'toggle_global_mute',
 	IncreaseVolume = 'increase_volume',
 	DecreaseVolume = 'decrease_volume',
-	PushToTalk = 'push_to_talk',
+	PushToTalkStart = 'push_to_talk_start',
+	PushToTalkStop = 'push_to_talk_stop',
 }
 
 export type ActionMessage = {
@@ -117,8 +118,8 @@ export function UpdateActions(self: ModuleInstance): void {
 			},
 		},
 
-		[ActionTypes.PushToTalk]: {
-			name: 'Push to talk',
+		[ActionTypes.PushToTalkStart]: {
+			name: 'Push to talk start',
 			options: [
 				{
 					id: 'channelIndex',
@@ -130,7 +131,24 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (action: CompanionActionEvent) => {
-				self.emitMessage({ action: ActionTypes.PushToTalk, index: action.options.channelIndex })
+				self.emitMessage({ action: ActionTypes.PushToTalkStart, index: action.options.channelIndex })
+			},
+		},
+
+		[ActionTypes.PushToTalkStop]: {
+			name: 'Push to talk stop',
+			options: [
+				{
+					id: 'channelIndex',
+					type: 'number',
+					label: 'Channel',
+					default: 1,
+					min: 1,
+					max: 10,
+				},
+			],
+			callback: async (action: CompanionActionEvent) => {
+				self.emitMessage({ action: ActionTypes.PushToTalkStop, index: action.options.channelIndex })
 			},
 		},
 

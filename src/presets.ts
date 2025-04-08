@@ -46,7 +46,13 @@ export function UpdatePresets(self: ModuleInstance): void {
 			category: PresetCategories.GlobalButtons,
 			name: 'Open Intercom',
 			type: 'button',
-			style: { text: 'Open Intercom', size: '14', color: combineRgb(255, 255, 255), bgcolor: combineRgb(0, 0, 0) },
+			style: {
+				text: 'Open Intercom',
+				size: '14',
+				color: combineRgb(255, 255, 255),
+				bgcolor: combineRgb(0, 0, 0),
+				show_topbar: false,
+			},
 			feedbacks: [],
 			steps: [
 				{
@@ -73,6 +79,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 				png64: unmutedInputIcon,
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
+				show_topbar: false,
 			},
 			feedbacks: [
 				{
@@ -112,6 +119,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
+				show_topbar: false,
 			},
 			feedbacks: [
 				{
@@ -146,6 +154,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
+				show_topbar: false,
 			},
 			feedbacks: [
 				{
@@ -180,17 +189,23 @@ export function UpdatePresets(self: ModuleInstance): void {
 				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
+				show_topbar: false,
 			},
 			feedbacks: [],
 			steps: [
 				{
 					down: [
 						{
-							actionId: ActionTypes.PushToTalk,
+							actionId: ActionTypes.PushToTalkStart,
 							options: { channelIndex: index },
 						},
 					],
-					up: [],
+					up: [
+						{
+							actionId: ActionTypes.PushToTalkStop,
+							options: { channelIndex: index },
+						},
+					],
 				},
 			],
 		}
@@ -206,6 +221,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
+				show_topbar: false,
 			},
 			feedbacks: [],
 			steps: [
@@ -232,6 +248,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 				alignment: 'right:top',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 0),
+				show_topbar: false,
 			},
 			feedbacks: [],
 			steps: [
