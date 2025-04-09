@@ -1,6 +1,8 @@
 import { CompanionActionDefinition, CompanionActionEvent, InputValue } from '@companion-module/base'
 import type { ModuleInstance } from './main.js'
 import open from 'open'
+import { Variables } from './variables.js'
+import { Feedbacks } from './feedbacks.js'
 
 export enum ActionTypes {
 	OpenIntercom = 'open_intercom',
@@ -11,6 +13,7 @@ export enum ActionTypes {
 	DecreaseVolume = 'decrease_volume',
 	PushToTalkStart = 'push_to_talk_start',
 	PushToTalkStop = 'push_to_talk_stop',
+	SetSelectedChannel = 'set_selected_channel',
 }
 
 export type ActionMessage = {
@@ -21,6 +24,17 @@ export type ActionMessage = {
 export const defaultOpenUrl = 'https://intercom-dev.app.eyevinn.technology/'
 
 export function UpdateActions(self: ModuleInstance): void {
+	const sendActionMessage = (action: CompanionActionEvent, actionType: ActionTypes) => {
+		const optionsChannelIndex = action.options.channelIndex?.toString()
+		const selectedChannelIndex = self.getVariableValue(Variables.SELECTED_CHANNEL)?.toString()
+		const channelIndex: string | undefined = optionsChannelIndex ?? selectedChannelIndex
+		if (!channelIndex) return
+		self.emitMessage({
+			action: actionType,
+			index: Number(channelIndex),
+		})
+	}
+
 	const actions: { [key in ActionTypes]: CompanionActionDefinition } = {
 		[ActionTypes.OpenIntercom]: {
 			name: 'Open Intercom',
@@ -52,18 +66,13 @@ export function UpdateActions(self: ModuleInstance): void {
 					id: 'channelIndex',
 					type: 'number',
 					label: 'Channel',
-					default: 1,
-					min: 1,
+					default: 0,
+					min: 0,
 					max: 10,
 				},
 			],
 			callback: async (action: CompanionActionEvent) => {
-				const channelIndex = action.options.channelIndex?.toString()
-				if (!channelIndex) return
-				self.emitMessage({
-					action: ActionTypes.ToggleInputMute,
-					index: action.options.channelIndex,
-				})
+				sendActionMessage(action, ActionTypes.ToggleInputMute)
 			},
 		},
 
@@ -80,7 +89,7 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (action: CompanionActionEvent) => {
-				self.emitMessage({ action: ActionTypes.ToggleOutputMute, index: action.options.channelIndex })
+				sendActionMessage(action, ActionTypes.ToggleOutputMute)
 			},
 		},
 
@@ -97,7 +106,7 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (action: CompanionActionEvent) => {
-				self.emitMessage({ action: ActionTypes.IncreaseVolume, index: action.options.channelIndex })
+				sendActionMessage(action, ActionTypes.IncreaseVolume)
 			},
 		},
 
@@ -114,7 +123,7 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (action: CompanionActionEvent) => {
-				self.emitMessage({ action: ActionTypes.DecreaseVolume, index: action.options.channelIndex })
+				sendActionMessage(action, ActionTypes.DecreaseVolume)
 			},
 		},
 
@@ -131,7 +140,7 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (action: CompanionActionEvent) => {
-				self.emitMessage({ action: ActionTypes.PushToTalkStart, index: action.options.channelIndex })
+				sendActionMessage(action, ActionTypes.PushToTalkStart)
 			},
 		},
 
@@ -148,7 +157,7 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: async (action: CompanionActionEvent) => {
-				self.emitMessage({ action: ActionTypes.PushToTalkStop, index: action.options.channelIndex })
+				sendActionMessage(action, ActionTypes.PushToTalkStop)
 			},
 		},
 
@@ -157,6 +166,24 @@ export function UpdateActions(self: ModuleInstance): void {
 			options: [],
 			callback: async () => {
 				self.emitMessage({ action: ActionTypes.ToggleGlobalMute })
+			},
+		},
+		[ActionTypes.SetSelectedChannel]: {
+			name: 'Set selected channel',
+			options: [
+				{
+					id: 'channelIndex',
+					type: 'number',
+					label: 'Channel',
+					required: true,
+					default: 0,
+					min: 0,
+					max: 10,
+				},
+			],
+			callback: async (action: CompanionActionEvent) => {
+				self.setVariableValues({ [Variables.SELECTED_CHANNEL]: action.options.channelIndex?.toString() })
+				self.checkFeedbacks(Feedbacks.GET_BUTTON_VARIABLE_STATE)
 			},
 		},
 	}

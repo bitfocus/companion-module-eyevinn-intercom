@@ -3,6 +3,7 @@ import { ChannelPresetCategories } from './presets.js'
 
 export enum GlobalVariables {
 	GLOBAL_MUTE = 'GlobalMute',
+	SELECTED_CHANNEL = 'SelectedChannel',
 }
 
 export enum ChannelXVariables {
@@ -18,13 +19,19 @@ interface VariableDefinition {
 }
 
 interface VariableValues {
-	[key: string]: boolean
+	[key: string]: boolean | number
 }
 
+const defaultVariables: VariableDefinition[] = [
+	{ variableId: Variables.GLOBAL_MUTE, name: Variables.GLOBAL_MUTE },
+	{ variableId: Variables.SELECTED_CHANNEL, name: Variables.SELECTED_CHANNEL },
+]
+
 export function UpdateVariableDefinitions(self: ModuleInstance): void {
-	const variableDefinitions: VariableDefinition[] = [{ variableId: Variables.GLOBAL_MUTE, name: Variables.GLOBAL_MUTE }]
+	const variableDefinitions: VariableDefinition[] = defaultVariables
 	const variableValues: VariableValues = {
 		[Variables.GLOBAL_MUTE]: false,
+		[Variables.SELECTED_CHANNEL]: 0,
 	}
 
 	for (let i in Object.values(ChannelPresetCategories)) {

@@ -28,13 +28,18 @@ export enum ChannelPresetCategories {
 	ChannelEightButtons = 'Channel 8 Buttons',
 }
 
-export const PresetCategories = { ...GlobalPresetCategories, ...ChannelPresetCategories }
+export enum ChannelXPresetCategory {
+	ChannelXButtons = 'Channel X Buttons',
+}
+
+export const PresetCategories = { ...GlobalPresetCategories, ...ChannelPresetCategories, ...ChannelXPresetCategory }
 
 export enum PresetTypes {
 	ToggleInputMute = 'toggle_input_mute',
 	ToggleOutputMute = 'toggle_output_mute',
 	IncreaseVolume = 'increase_volume',
 	DecreaseVolume = 'decrease_volume',
+	ChannelSelect = 'channel_select',
 	PushToTalk = 'push_to_talk',
 	ToggleGlobalMute = 'toggle_global_mute',
 	OpenIntercom = 'open_intercom',
@@ -102,6 +107,162 @@ export function UpdatePresets(self: ModuleInstance): void {
 				},
 			],
 		},
+	}
+	presets[PresetTypes.ToggleInputMute + 'X'] = {
+		category: PresetCategories.ChannelXButtons,
+		name: 'Toggle Input Mute X',
+		type: 'button',
+		style: {
+			text: 'X',
+			size: '14',
+			png64: unmutedInputIcon,
+			pngalignment: 'center:center',
+			alignment: 'right:top',
+			color: combineRgb(255, 255, 255),
+			bgcolor: combineRgb(0, 0, 0),
+			show_topbar: false,
+		},
+		feedbacks: [
+			{
+				feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
+				options: { variableId: Variables.CHANNEL_X_INPUT_MUTE },
+				style: {
+					png64: mutedInputIcon,
+				},
+			},
+		],
+		steps: [
+			{
+				down: [
+					{
+						actionId: ActionTypes.ToggleInputMute,
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+	}
+	presets[PresetTypes.ToggleOutputMute + 'X'] = {
+		category: PresetCategories.ChannelXButtons,
+		name: 'Toggle Output Mute X',
+		type: 'button',
+		style: {
+			text: 'X',
+			size: '14',
+			png64: unmutedOutputIcon,
+			pngalignment: 'center:center',
+			alignment: 'right:top',
+			color: combineRgb(255, 255, 255),
+			bgcolor: combineRgb(0, 0, 0),
+			show_topbar: false,
+		},
+		feedbacks: [
+			{
+				feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
+				options: { variableId: Variables.CHANNEL_X_OUTPUT_MUTE },
+				style: {
+					png64: mutedOutputIcon,
+				},
+			},
+		],
+		steps: [
+			{
+				down: [
+					{
+						actionId: ActionTypes.ToggleOutputMute,
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+	}
+	presets[PresetTypes.IncreaseVolume + 'X'] = {
+		category: PresetCategories.ChannelXButtons,
+		name: 'Increase Volume X',
+		type: 'button',
+		style: {
+			text: 'X',
+			size: '14',
+			png64: increaseVolumeIcon,
+			pngalignment: 'center:center',
+			alignment: 'right:top',
+			color: combineRgb(255, 255, 255),
+			bgcolor: combineRgb(0, 0, 0),
+			show_topbar: false,
+		},
+		feedbacks: [],
+		steps: [
+			{
+				down: [
+					{
+						actionId: ActionTypes.IncreaseVolume,
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+	}
+	presets[PresetTypes.DecreaseVolume + 'X'] = {
+		category: PresetCategories.ChannelXButtons,
+		name: 'Decrease Volume X',
+		type: 'button',
+		style: {
+			text: 'X',
+			size: '14',
+			png64: decreaseVolumeIcon,
+			pngalignment: 'center:center',
+			alignment: 'right:top',
+			color: combineRgb(255, 255, 255),
+			bgcolor: combineRgb(0, 0, 0),
+			show_topbar: false,
+		},
+		feedbacks: [],
+		steps: [
+			{
+				down: [
+					{
+						actionId: ActionTypes.DecreaseVolume,
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+	}
+	presets[PresetTypes.PushToTalk + 'X'] = {
+		category: PresetCategories.ChannelXButtons,
+		name: 'Push To Talk X',
+		type: 'button',
+		style: {
+			text: 'X',
+			size: '14',
+			png64: PTTEnabledIcon,
+			pngalignment: 'center:center',
+			alignment: 'right:top',
+			color: combineRgb(255, 255, 255),
+			bgcolor: combineRgb(0, 0, 0),
+			show_topbar: false,
+		},
+		feedbacks: [],
+		steps: [
+			{
+				down: [
+					{
+						actionId: ActionTypes.PushToTalkStart,
+						options: {},
+					},
+				],
+				up: [
+					{
+						actionId: ActionTypes.PushToTalkStop,
+						options: {},
+					},
+				],
+			},
+		],
 	}
 	let index = 0
 	const categories = Object.values(ChannelPresetCategories)
@@ -260,6 +421,36 @@ export function UpdatePresets(self: ModuleInstance): void {
 						},
 					],
 					up: [],
+				},
+			],
+		}
+		presets[PresetTypes.ChannelSelect + index] = {
+			category: PresetCategories.ChannelXButtons,
+			name: 'Channel ' + index,
+			type: 'button',
+			style: {
+				text: 'Channel ' + index.toString(),
+				size: '14',
+				alignment: 'center:center',
+				color: combineRgb(255, 255, 255),
+				bgcolor: combineRgb(0, 0, 0),
+				show_topbar: false,
+			},
+			feedbacks: [],
+			steps: [
+				{
+					down: [
+						{
+							actionId: ActionTypes.SetSelectedChannel,
+							options: { channelIndex: index },
+						},
+					],
+					up: [
+						{
+							actionId: ActionTypes.SetSelectedChannel,
+							options: { channelIndex: 0 },
+						},
+					],
 				},
 			],
 		}
