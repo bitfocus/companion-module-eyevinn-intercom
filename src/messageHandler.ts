@@ -25,6 +25,7 @@ export type CallsStateUpdate = {
 }
 
 export const handleMessage = (self: ModuleInstance, msg: CallStateUpdate | CallsStateUpdate): void => {
+	console.log(msg)
 	const getCallStateVariableUpdates = (call: Call) => {
 		const updates: { [key: string]: boolean } = {}
 		const inputMuteVariable = Variables.CHANNEL_X_INPUT_MUTE.replace('X', call.index.toString())
@@ -48,16 +49,23 @@ export const handleMessage = (self: ModuleInstance, msg: CallStateUpdate | Calls
 		}
 	} else if (msg.type === MessageTypes.CALLS_STATE_UPDATE) {
 		const variableIsGlobalMute = self.getVariableValue(Variables.GLOBAL_MUTE)
+		const variableNumberOfCalls = self.getVariableValue(Variables.NUMBER_OF_CALLS)
+		let updates: { [key: string]: string | boolean | number } = {}
 		if (variableIsGlobalMute !== msg.globalMute) {
-			let updates = {}
 			msg.calls.forEach((call) => {
 				updates = {
 					...updates,
 					...getCallStateVariableUpdates(call),
 				}
 			})
-			self.setVariableValues({ [Variables.GLOBAL_MUTE]: msg.globalMute, ...updates })
-			self.checkFeedbacks(Feedbacks.GET_BUTTON_VARIABLE_STATE)
+			updates[Variables.GLOBAL_MUTE] = msg.globalMute
+		}
+		if (variableNumberOfCalls !== msg.numberOfCalls) {
+			updates[Variables.NUMBER_OF_CALLS] = msg.numberOfCalls
+		}
+		if (Object.keys(updates).length) {
+			self.setVariableValues(updates)
+			self.checkFeedbacks(Feedbacks.GET_BUTTON_VARIABLE_STATE, Feedbacks.IS_BUTTON_DISABLED)
 		}
 	}
 }

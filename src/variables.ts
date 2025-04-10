@@ -4,6 +4,7 @@ import { ChannelPresetCategories } from './presets.js'
 export enum GlobalVariables {
 	GLOBAL_MUTE = 'GlobalMute',
 	SELECTED_CHANNEL = 'SelectedChannel',
+	NUMBER_OF_CALLS = 'NumberOfCalls',
 }
 
 export enum ChannelXVariables {
@@ -25,6 +26,7 @@ interface VariableValues {
 const defaultVariables: VariableDefinition[] = [
 	{ variableId: Variables.GLOBAL_MUTE, name: Variables.GLOBAL_MUTE },
 	{ variableId: Variables.SELECTED_CHANNEL, name: Variables.SELECTED_CHANNEL },
+	{ variableId: Variables.NUMBER_OF_CALLS, name: Variables.NUMBER_OF_CALLS },
 ]
 
 export function UpdateVariableDefinitions(self: ModuleInstance): void {
@@ -32,6 +34,7 @@ export function UpdateVariableDefinitions(self: ModuleInstance): void {
 	const variableValues: VariableValues = {
 		[Variables.GLOBAL_MUTE]: false,
 		[Variables.SELECTED_CHANNEL]: 0,
+		[Variables.NUMBER_OF_CALLS]: 0,
 	}
 
 	for (let i in Object.values(ChannelPresetCategories)) {

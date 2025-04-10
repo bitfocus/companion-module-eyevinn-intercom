@@ -183,7 +183,7 @@ export function UpdateActions(self: ModuleInstance): void {
 			],
 			callback: async (action: CompanionActionEvent) => {
 				self.setVariableValues({ [Variables.SELECTED_CHANNEL]: action.options.channelIndex?.toString() })
-				self.checkFeedbacks(Feedbacks.GET_BUTTON_VARIABLE_STATE)
+				self.checkFeedbacks(Feedbacks.GET_BUTTON_VARIABLE_STATE, Feedbacks.IS_BUTTON_DISABLED)
 			},
 		},
 	}

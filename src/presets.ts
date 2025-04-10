@@ -3,6 +3,11 @@ import { ModuleInstance } from './main.js'
 import { ActionTypes, defaultOpenUrl } from './actions.js'
 import {
 	decreaseVolumeIcon,
+	diabledInputIcon,
+	disabledDecreaseVolumeIcon,
+	disabledIncreaseVolumeIcon,
+	disabledOutputIcon,
+	disabledPTTIcon,
 	increaseVolumeIcon,
 	mutedInputIcon,
 	mutedOutputIcon,
@@ -130,6 +135,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 					png64: mutedInputIcon,
 				},
 			},
+			{
+				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+				options: {},
+				style: {
+					png64: diabledInputIcon,
+					color: combineRgb(133, 133, 133),
+				},
+			},
 		],
 		steps: [
 			{
@@ -165,6 +178,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 					png64: mutedOutputIcon,
 				},
 			},
+			{
+				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+				options: {},
+				style: {
+					png64: disabledOutputIcon,
+					color: combineRgb(133, 133, 133),
+				},
+			},
 		],
 		steps: [
 			{
@@ -192,7 +213,16 @@ export function UpdatePresets(self: ModuleInstance): void {
 			bgcolor: combineRgb(0, 0, 0),
 			show_topbar: false,
 		},
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+				options: {},
+				style: {
+					png64: disabledIncreaseVolumeIcon,
+					color: combineRgb(133, 133, 133),
+				},
+			},
+		],
 		steps: [
 			{
 				down: [
@@ -219,7 +249,16 @@ export function UpdatePresets(self: ModuleInstance): void {
 			bgcolor: combineRgb(0, 0, 0),
 			show_topbar: false,
 		},
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+				options: {},
+				style: {
+					png64: disabledDecreaseVolumeIcon,
+					color: combineRgb(133, 133, 133),
+				},
+			},
+		],
 		steps: [
 			{
 				down: [
@@ -246,7 +285,16 @@ export function UpdatePresets(self: ModuleInstance): void {
 			bgcolor: combineRgb(0, 0, 0),
 			show_topbar: false,
 		},
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+				options: {},
+				style: {
+					png64: disabledPTTIcon,
+					color: combineRgb(133, 133, 133),
+				},
+			},
+		],
 		steps: [
 			{
 				down: [
@@ -290,6 +338,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 						png64: mutedInputIcon,
 					},
 				},
+				{
+					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+					options: { channelIndex: index },
+					style: {
+						png64: diabledInputIcon,
+						color: combineRgb(133, 133, 133),
+					},
+				},
 			],
 			steps: [
 				{
@@ -325,6 +381,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 						png64: mutedOutputIcon,
 					},
 				},
+				{
+					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+					options: { channelIndex: index },
+					style: {
+						png64: disabledOutputIcon,
+						color: combineRgb(133, 133, 133),
+					},
+				},
 			],
 			steps: [
 				{
@@ -352,7 +416,16 @@ export function UpdatePresets(self: ModuleInstance): void {
 				bgcolor: combineRgb(0, 0, 0),
 				show_topbar: false,
 			},
-			feedbacks: [],
+			feedbacks: [
+				{
+					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+					options: { channelIndex: index },
+					style: {
+						png64: disabledPTTIcon,
+						color: combineRgb(133, 133, 133),
+					},
+				},
+			],
 			steps: [
 				{
 					down: [
@@ -384,7 +457,16 @@ export function UpdatePresets(self: ModuleInstance): void {
 				bgcolor: combineRgb(0, 0, 0),
 				show_topbar: false,
 			},
-			feedbacks: [],
+			feedbacks: [
+				{
+					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+					options: { channelIndex: index },
+					style: {
+						png64: disabledIncreaseVolumeIcon,
+						color: combineRgb(133, 133, 133),
+					},
+				},
+			],
 			steps: [
 				{
 					down: [
@@ -411,7 +493,16 @@ export function UpdatePresets(self: ModuleInstance): void {
 				bgcolor: combineRgb(0, 0, 0),
 				show_topbar: false,
 			},
-			feedbacks: [],
+			feedbacks: [
+				{
+					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+					options: { channelIndex: index },
+					style: {
+						png64: disabledDecreaseVolumeIcon,
+						color: combineRgb(133, 133, 133),
+					},
+				},
+			],
 			steps: [
 				{
 					down: [
@@ -436,7 +527,15 @@ export function UpdatePresets(self: ModuleInstance): void {
 				bgcolor: combineRgb(0, 0, 0),
 				show_topbar: false,
 			},
-			feedbacks: [],
+			feedbacks: [
+				{
+					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+					options: { channelIndex: index },
+					style: {
+						color: combineRgb(133, 133, 133),
+					},
+				},
+			],
 			steps: [
 				{
 					down: [

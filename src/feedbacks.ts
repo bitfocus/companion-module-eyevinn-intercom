@@ -3,6 +3,7 @@ import { ChannelXVariables, Variables } from './variables.js'
 
 export enum Feedbacks {
 	GET_BUTTON_VARIABLE_STATE = 'GetButtonVariableState',
+	IS_BUTTON_DISABLED = 'IsButtonDisabled',
 }
 
 export function UpdateFeedbacks(self: ModuleInstance): void {
@@ -34,6 +35,29 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				} else {
 					return false
 				}
+			},
+		},
+		[Feedbacks.IS_BUTTON_DISABLED]: {
+			name: Feedbacks.IS_BUTTON_DISABLED,
+			type: 'boolean',
+			defaultStyle: {},
+			options: [
+				{
+					id: 'channelIndex',
+					type: 'number',
+					label: 'Channel Index',
+					default: 0,
+					min: 0,
+					max: 18,
+				},
+			],
+			callback: async (feedback) => {
+				let channelIndex = feedback.options.channelIndex
+				if (!channelIndex) {
+					channelIndex = self.getVariableValue(Variables.SELECTED_CHANNEL) || 0
+				}
+				const numberOfCalls = self.getVariableValue(Variables.NUMBER_OF_CALLS) || 0
+				return !(channelIndex <= numberOfCalls)
 			},
 		},
 	})
