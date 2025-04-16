@@ -1,8 +1,8 @@
 {
 	"id": "eyevinn-intercom",
-	"name": "Intercom",
-	"shortname": "Intercom",
-	"description": "Eyevinn Intercom module for Companion",
+	"name": "Open Intercom",
+	"shortname": "Open Intercom",
+	"description": "Eyevinn Open Intercom module for Companion",
 	"version": "0.0.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/Eyevinn/companion-module-eyevinn-intercom.git",
@@ -15,6 +15,10 @@
 		{
 			"name": "Sandra Larsson",
 			"email": "sandra.larsson@eyevinn.se"
+		},
+		{
+			"name": "Linda Malm",
+			"email": "linda.malm@eyevinn.se"
 		}
 	],
 	"legacyIds": [],
@@ -25,6 +29,6 @@
 		"entrypoint": "../dist/main.js"
 	},
 	"manufacturer": "Eyevinn",
-	"products": ["Intercom"],
+	"products": ["Open Intercom"],
 	"keywords": ["eyevinn", "intercom"]
 }
