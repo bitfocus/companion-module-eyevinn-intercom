@@ -52,6 +52,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				},
 			],
 			callback: async (feedback) => {
+				const isConnected = self.getVariableValue(Variables.IS_CONNECTED)
+				if (!isConnected) return true
 				let channelIndex = feedback.options.channelIndex
 				if (!channelIndex) {
 					channelIndex = self.getVariableValue(Variables.SELECTED_CHANNEL) || 0

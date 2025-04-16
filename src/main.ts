@@ -1,9 +1,9 @@
 import { InstanceBase, InstanceStatus, runEntrypoint, SomeCompanionConfigField } from '@companion-module/base'
 import { ActionMessage, UpdateActions } from './actions.js'
 import { GetConfigFields, ModuleConfig } from './config.js'
-import { UpdateFeedbacks } from './feedbacks.js'
+import { Feedbacks, UpdateFeedbacks } from './feedbacks.js'
 import { UpgradeScripts } from './upgrades.js'
-import { UpdateVariableDefinitions } from './variables.js'
+import { UpdateVariableDefinitions, Variables } from './variables.js'
 
 import WebSocket, { WebSocketServer } from 'ws'
 import { UpdatePresets } from './presets.js'
@@ -48,13 +48,18 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 		this.wss.on('connection', (ws) => {
 			this.clients.add(ws)
+			this.setVariableValues({ [Variables.IS_CONNECTED]: true })
+			this.checkFeedbacks(Feedbacks.IS_BUTTON_DISABLED)
 			this.log('info', 'WebSocket client connected')
 
 			ws.on('close', () => {
 				this.clients.delete(ws)
+				this.setVariableValues({ [Variables.IS_CONNECTED]: false })
+				this.checkFeedbacks(Feedbacks.IS_BUTTON_DISABLED)
 			})
 
-			ws.on('message', (msg) => {
+			ws.on('message', (msg: WebSocket.RawData) => {
+				// eslint-disable-next-line @typescript-eslint/no-base-to-string
 				handleMessage(this, JSON.parse(msg.toString()))
 			})
 		})

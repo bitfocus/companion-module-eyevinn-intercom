@@ -2,12 +2,14 @@ import { combineRgb, type CompanionPresetDefinitions } from '@companion-module/b
 import { ModuleInstance } from './main.js'
 import { ActionTypes, defaultOpenUrl } from './actions.js'
 import {
+	connectedIcon,
 	decreaseVolumeIcon,
 	diabledInputIcon,
 	disabledDecreaseVolumeIcon,
 	disabledIncreaseVolumeIcon,
 	disabledOutputIcon,
 	disabledPTTIcon,
+	disconnectedIcon,
 	increaseVolumeIcon,
 	mutedInputIcon,
 	mutedOutputIcon,
@@ -17,6 +19,9 @@ import {
 } from './icons.js'
 import { Feedbacks } from './feedbacks.js'
 import { Variables } from './variables.js'
+
+// rgb(111, 216, 79)
+// rgb(249, 108, 108)
 
 export enum GlobalPresetCategories {
 	GlobalButtons = 'Global Buttons',
@@ -48,10 +53,41 @@ export enum PresetTypes {
 	PushToTalk = 'push_to_talk',
 	ToggleGlobalMute = 'toggle_global_mute',
 	OpenIntercom = 'open_intercom',
+	ConnectionStatus = 'connection_status',
 }
 
 export function UpdatePresets(self: ModuleInstance): void {
 	const presets: CompanionPresetDefinitions = {
+		[PresetTypes.ConnectionStatus]: {
+			category: PresetCategories.GlobalButtons,
+			name: 'Connection Status',
+			type: 'button',
+			style: {
+				text: 'Status',
+				size: '14',
+				alignment: 'right:top',
+				png64: connectedIcon,
+				color: combineRgb(255, 255, 255),
+				bgcolor: combineRgb(0, 0, 0),
+				show_topbar: false,
+			},
+			feedbacks: [
+				{
+					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+					options: {},
+					style: {
+						png64: disconnectedIcon,
+						color: combineRgb(133, 133, 133),
+					},
+				},
+			],
+			steps: [
+				{
+					down: [],
+					up: [],
+				},
+			],
+		},
 		[PresetTypes.OpenIntercom]: {
 			category: PresetCategories.GlobalButtons,
 			name: 'Open Intercom',
@@ -97,6 +133,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 					options: { variableId: Variables.GLOBAL_MUTE },
 					style: {
 						png64: mutedInputIcon,
+					},
+				},
+				{
+					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+					options: {},
+					style: {
+						png64: diabledInputIcon,
+						color: combineRgb(133, 133, 133),
 					},
 				},
 			],
