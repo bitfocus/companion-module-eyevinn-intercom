@@ -12,7 +12,6 @@ import {
 	increaseVolumeIcon,
 	mutedInputIcon,
 	PTTEnabledIcon,
-	unmutedInputIcon,
 	unmutedOutputIcon,
 } from './icons.js'
 import { Feedbacks } from './feedbacks.js'
