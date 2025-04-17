@@ -77,7 +77,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			defaultStyle: {},
 			options: [],
 			callback: async () => {
-				return !!self.getVariableValue(Variables.GLOBAL_MUTE)
+				return !self.getVariableValue(Variables.GLOBAL_MUTE)
 			},
 		},
 		[Feedbacks.GET_INPUT_MUTE_BUTTON_STATUS]: {

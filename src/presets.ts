@@ -12,12 +12,15 @@ import {
 	increaseVolumeIcon,
 	mutedInputIcon,
 	PTTEnabledIcon,
+	unmutedInputIcon,
 	unmutedOutputIcon,
 } from './icons.js'
 import { Feedbacks } from './feedbacks.js'
 
 // rgb(111, 216, 79)
 // rgb(249, 108, 108)
+// rgb(133, 133, 133)
+// #59cbe8
 
 export enum GlobalPresetCategories {
 	GlobalButtons = 'Global Buttons',
@@ -131,7 +134,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 					feedbackId: Feedbacks.GET_GLOBAL_INPUT_MUTE_BUTTON_STATUS,
 					options: {},
 					style: {
-						png64: mutedInputIcon,
+						png64: unmutedInputIcon,
 					},
 				},
 				{
