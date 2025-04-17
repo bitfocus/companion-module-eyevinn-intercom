@@ -1,8 +1,8 @@
 import { CompanionActionDefinition, CompanionActionEvent, InputValue } from '@companion-module/base'
-import type { ModuleInstance } from './main.js'
 import open from 'open'
-import { Variables } from './variables.js'
 import { Feedbacks } from './feedbacks.js'
+import type { ModuleInstance } from './main.js'
+import { Variables } from './variables.js'
 
 export enum ActionTypes {
 	OpenIntercom = 'open_intercom',
@@ -111,7 +111,7 @@ export function UpdateActions(self: ModuleInstance): void {
 		},
 
 		[ActionTypes.DecreaseVolume]: {
-			name: 'Volume down',
+			name: 'Decrease volume',
 			options: [
 				{
 					id: 'channelIndex',
