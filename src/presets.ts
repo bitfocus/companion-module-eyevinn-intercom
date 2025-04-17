@@ -1,4 +1,4 @@
-import { combineRgb, type CompanionPresetDefinitions } from '@companion-module/base'
+import { combineRgb, CompanionButtonStyleProps, type CompanionPresetDefinitions } from '@companion-module/base'
 import { ModuleInstance } from './main.js'
 import { ActionTypes, defaultOpenUrl } from './actions.js'
 import {
@@ -7,18 +7,15 @@ import {
 	diabledInputIcon,
 	disabledDecreaseVolumeIcon,
 	disabledIncreaseVolumeIcon,
-	disabledOutputIcon,
 	disabledPTTIcon,
 	disconnectedIcon,
 	increaseVolumeIcon,
 	mutedInputIcon,
-	mutedOutputIcon,
 	PTTEnabledIcon,
 	unmutedInputIcon,
 	unmutedOutputIcon,
 } from './icons.js'
 import { Feedbacks } from './feedbacks.js'
-import { Variables } from './variables.js'
 
 // rgb(111, 216, 79)
 // rgb(249, 108, 108)
@@ -56,6 +53,19 @@ export enum PresetTypes {
 	ConnectionStatus = 'connection_status',
 }
 
+const defaultStyles: Omit<CompanionButtonStyleProps, 'text'> = {
+	size: '14',
+	alignment: 'right:bottom',
+	pngalignment: 'center:center',
+	color: combineRgb(255, 255, 255),
+	bgcolor: combineRgb(0, 0, 0),
+	show_topbar: false,
+}
+
+export const defaultDisabledStyles: Partial<CompanionButtonStyleProps> = {
+	color: combineRgb(133, 133, 133),
+}
+
 export function UpdatePresets(self: ModuleInstance): void {
 	const presets: CompanionPresetDefinitions = {
 		[PresetTypes.ConnectionStatus]: {
@@ -63,21 +73,17 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Connection Status',
 			type: 'button',
 			style: {
+				...defaultStyles,
 				text: 'Status',
-				size: '14',
-				alignment: 'right:top',
 				png64: connectedIcon,
-				color: combineRgb(255, 255, 255),
-				bgcolor: combineRgb(0, 0, 0),
-				show_topbar: false,
 			},
 			feedbacks: [
 				{
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: {},
 					style: {
+						...defaultDisabledStyles,
 						png64: disconnectedIcon,
-						color: combineRgb(133, 133, 133),
 					},
 				},
 			],
@@ -93,11 +99,9 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Open Intercom',
 			type: 'button',
 			style: {
+				...defaultStyles,
+				alignment: 'center:center',
 				text: 'Open Intercom',
-				size: '14',
-				color: combineRgb(255, 255, 255),
-				bgcolor: combineRgb(0, 0, 0),
-				show_topbar: false,
 			},
 			feedbacks: [],
 			steps: [
@@ -119,18 +123,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Toggle Input Mute',
 			type: 'button',
 			style: {
+				...defaultStyles,
 				text: 'Global',
-				size: '14',
-				alignment: 'right:top',
 				png64: unmutedInputIcon,
-				color: combineRgb(255, 255, 255),
-				bgcolor: combineRgb(0, 0, 0),
-				show_topbar: false,
 			},
 			feedbacks: [
 				{
-					feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
-					options: { variableId: Variables.GLOBAL_MUTE },
+					feedbackId: Feedbacks.GET_GLOBAL_INPUT_MUTE_BUTTON_STATUS,
+					options: {},
 					style: {
 						png64: mutedInputIcon,
 					},
@@ -139,8 +139,8 @@ export function UpdatePresets(self: ModuleInstance): void {
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: {},
 					style: {
+						...defaultDisabledStyles,
 						png64: diabledInputIcon,
-						color: combineRgb(133, 133, 133),
 					},
 				},
 			],
@@ -162,30 +162,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 		name: 'Toggle Input Mute X',
 		type: 'button',
 		style: {
+			...defaultStyles,
 			text: 'X',
-			size: '14',
 			png64: unmutedInputIcon,
-			pngalignment: 'center:center',
-			alignment: 'right:top',
-			color: combineRgb(255, 255, 255),
-			bgcolor: combineRgb(0, 0, 0),
-			show_topbar: false,
 		},
 		feedbacks: [
 			{
-				feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
-				options: { variableId: Variables.CHANNEL_X_INPUT_MUTE },
-				style: {
-					png64: mutedInputIcon,
-				},
-			},
-			{
-				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+				feedbackId: Feedbacks.GET_INPUT_MUTE_BUTTON_STATUS,
 				options: {},
-				style: {
-					png64: diabledInputIcon,
-					color: combineRgb(133, 133, 133),
-				},
 			},
 		],
 		steps: [
@@ -205,30 +189,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 		name: 'Toggle Output Mute X',
 		type: 'button',
 		style: {
+			...defaultStyles,
 			text: 'X',
-			size: '14',
 			png64: unmutedOutputIcon,
-			pngalignment: 'center:center',
-			alignment: 'right:top',
-			color: combineRgb(255, 255, 255),
-			bgcolor: combineRgb(0, 0, 0),
-			show_topbar: false,
 		},
 		feedbacks: [
 			{
-				feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
-				options: { variableId: Variables.CHANNEL_X_OUTPUT_MUTE },
-				style: {
-					png64: mutedOutputIcon,
-				},
-			},
-			{
-				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+				feedbackId: Feedbacks.GET_OUTPUT_MUTE_BUTTON_STATUS,
 				options: {},
-				style: {
-					png64: disabledOutputIcon,
-					color: combineRgb(133, 133, 133),
-				},
 			},
 		],
 		steps: [
@@ -248,23 +216,22 @@ export function UpdatePresets(self: ModuleInstance): void {
 		name: 'Increase Volume X',
 		type: 'button',
 		style: {
+			...defaultStyles,
 			text: 'X',
-			size: '14',
 			png64: increaseVolumeIcon,
-			pngalignment: 'center:center',
-			alignment: 'right:top',
-			color: combineRgb(255, 255, 255),
-			bgcolor: combineRgb(0, 0, 0),
-			show_topbar: false,
 		},
 		feedbacks: [
 			{
 				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 				options: {},
 				style: {
+					...defaultDisabledStyles,
 					png64: disabledIncreaseVolumeIcon,
-					color: combineRgb(133, 133, 133),
 				},
+			},
+			{
+				feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+				options: {},
 			},
 		],
 		steps: [
@@ -284,23 +251,22 @@ export function UpdatePresets(self: ModuleInstance): void {
 		name: 'Decrease Volume X',
 		type: 'button',
 		style: {
+			...defaultStyles,
 			text: 'X',
-			size: '14',
 			png64: decreaseVolumeIcon,
-			pngalignment: 'center:center',
-			alignment: 'right:top',
-			color: combineRgb(255, 255, 255),
-			bgcolor: combineRgb(0, 0, 0),
-			show_topbar: false,
 		},
 		feedbacks: [
 			{
 				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 				options: {},
 				style: {
+					...defaultDisabledStyles,
 					png64: disabledDecreaseVolumeIcon,
-					color: combineRgb(133, 133, 133),
 				},
+			},
+			{
+				feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+				options: {},
 			},
 		],
 		steps: [
@@ -320,23 +286,22 @@ export function UpdatePresets(self: ModuleInstance): void {
 		name: 'Push To Talk X',
 		type: 'button',
 		style: {
+			...defaultStyles,
 			text: 'X',
-			size: '14',
 			png64: PTTEnabledIcon,
-			pngalignment: 'center:center',
-			alignment: 'right:top',
-			color: combineRgb(255, 255, 255),
-			bgcolor: combineRgb(0, 0, 0),
-			show_topbar: false,
 		},
 		feedbacks: [
 			{
 				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 				options: {},
 				style: {
+					...defaultDisabledStyles,
 					png64: disabledPTTIcon,
-					color: combineRgb(133, 133, 133),
 				},
+			},
+			{
+				feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+				options: {},
 			},
 		],
 		steps: [
@@ -365,34 +330,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Toggle Input Mute' + index,
 			type: 'button',
 			style: {
+				...defaultStyles,
 				text: index.toString(),
-				size: '14',
-				png64: unmutedInputIcon,
-				pngalignment: 'center:center',
-				alignment: 'right:top',
-				color: combineRgb(255, 255, 255),
-				bgcolor: combineRgb(0, 0, 0),
-				show_topbar: false,
+				png64: mutedInputIcon,
 			},
 			feedbacks: [
 				{
-					feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					feedbackId: Feedbacks.GET_INPUT_MUTE_BUTTON_STATUS,
 					options: { channelIndex: index },
-				},
-				{
-					feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
-					options: { variableId: Variables.CHANNEL_X_INPUT_MUTE.replace('X', index.toString()) },
-					style: {
-						png64: mutedInputIcon,
-					},
-				},
-				{
-					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
-					options: { channelIndex: index },
-					style: {
-						png64: diabledInputIcon,
-						color: combineRgb(133, 133, 133),
-					},
 				},
 			],
 			steps: [
@@ -412,34 +357,14 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Toggle Output Mute' + index,
 			type: 'button',
 			style: {
+				...defaultStyles,
 				text: index.toString(),
-				size: '14',
 				png64: unmutedOutputIcon,
-				pngalignment: 'center:center',
-				alignment: 'right:top',
-				color: combineRgb(255, 255, 255),
-				bgcolor: combineRgb(0, 0, 0),
-				show_topbar: false,
 			},
 			feedbacks: [
 				{
-					feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					feedbackId: Feedbacks.GET_OUTPUT_MUTE_BUTTON_STATUS,
 					options: { channelIndex: index },
-				},
-				{
-					feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
-					options: { variableId: Variables.CHANNEL_X_OUTPUT_MUTE.replace('X', index.toString()) },
-					style: {
-						png64: mutedOutputIcon,
-					},
-				},
-				{
-					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
-					options: { channelIndex: index },
-					style: {
-						png64: disabledOutputIcon,
-						color: combineRgb(133, 133, 133),
-					},
 				},
 			],
 			steps: [
@@ -459,14 +384,9 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Push To Talk' + index,
 			type: 'button',
 			style: {
+				...defaultStyles,
 				text: index.toString(),
-				size: '14',
 				png64: PTTEnabledIcon,
-				pngalignment: 'center:center',
-				alignment: 'right:top',
-				color: combineRgb(255, 255, 255),
-				bgcolor: combineRgb(0, 0, 0),
-				show_topbar: false,
 			},
 			feedbacks: [
 				{
@@ -477,8 +397,8 @@ export function UpdatePresets(self: ModuleInstance): void {
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: { channelIndex: index },
 					style: {
+						...defaultDisabledStyles,
 						png64: disabledPTTIcon,
-						color: combineRgb(133, 133, 133),
 					},
 				},
 			],
@@ -504,14 +424,9 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Increase Volume' + index,
 			type: 'button',
 			style: {
+				...defaultStyles,
 				text: index.toString(),
-				size: '14',
 				png64: increaseVolumeIcon,
-				pngalignment: 'center:center',
-				alignment: 'right:top',
-				color: combineRgb(255, 255, 255),
-				bgcolor: combineRgb(0, 0, 0),
-				show_topbar: false,
 			},
 			feedbacks: [
 				{
@@ -522,8 +437,8 @@ export function UpdatePresets(self: ModuleInstance): void {
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: { channelIndex: index },
 					style: {
+						...defaultDisabledStyles,
 						png64: disabledIncreaseVolumeIcon,
-						color: combineRgb(133, 133, 133),
 					},
 				},
 			],
@@ -544,14 +459,9 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Decrease Volume' + index,
 			type: 'button',
 			style: {
+				...defaultStyles,
 				text: index.toString(),
-				size: '14',
 				png64: decreaseVolumeIcon,
-				pngalignment: 'center:center',
-				alignment: 'right:top',
-				color: combineRgb(255, 255, 255),
-				bgcolor: combineRgb(0, 0, 0),
-				show_topbar: false,
 			},
 			feedbacks: [
 				{
@@ -562,8 +472,8 @@ export function UpdatePresets(self: ModuleInstance): void {
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: { channelIndex: index },
 					style: {
+						...defaultDisabledStyles,
 						png64: disabledDecreaseVolumeIcon,
-						color: combineRgb(133, 133, 133),
 					},
 				},
 			],
@@ -584,12 +494,9 @@ export function UpdatePresets(self: ModuleInstance): void {
 			name: 'Call ' + index,
 			type: 'button',
 			style: {
+				...defaultStyles,
 				text: 'Call ' + index.toString(),
-				size: '14',
 				alignment: 'center:center',
-				color: combineRgb(255, 255, 255),
-				bgcolor: combineRgb(0, 0, 0),
-				show_topbar: false,
 			},
 			feedbacks: [
 				{
@@ -600,7 +507,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: { channelIndex: index },
 					style: {
-						color: combineRgb(133, 133, 133),
+						...defaultDisabledStyles,
 					},
 				},
 			],

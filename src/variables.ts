@@ -53,7 +53,7 @@ export const getDefaultVariables = (): { definitions: VariableDefinition[]; valu
 					break
 				default:
 				case ChannelXVariables.CHANNEL_X_NAME:
-					variableValue = (index + 1).toString()
+					variableValue = 'Call ' + (index + 1).toString()
 					break
 			}
 			variableDefinitions.push({ variableId, name: variableId })

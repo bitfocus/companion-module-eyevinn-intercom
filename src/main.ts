@@ -49,13 +49,23 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		this.wss.on('connection', (ws) => {
 			this.clients.add(ws)
 			this.setVariableValues({ [Variables.IS_CONNECTED]: true })
-			this.checkFeedbacks(Feedbacks.IS_BUTTON_DISABLED)
+			this.checkFeedbacks(
+				Feedbacks.GET_INPUT_MUTE_BUTTON_STATUS,
+				Feedbacks.GET_OUTPUT_MUTE_BUTTON_STATUS,
+				Feedbacks.GET_BUTTON_CHANNEL_NAME,
+				Feedbacks.IS_BUTTON_DISABLED,
+			)
 			this.log('info', 'WebSocket client connected')
 
 			ws.on('close', () => {
 				this.clients.delete(ws)
 				this.setVariableValues(getDefaultVariables().values)
-				this.checkFeedbacks(Feedbacks.IS_BUTTON_DISABLED)
+				this.checkFeedbacks(
+					Feedbacks.GET_INPUT_MUTE_BUTTON_STATUS,
+					Feedbacks.GET_OUTPUT_MUTE_BUTTON_STATUS,
+					Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					Feedbacks.IS_BUTTON_DISABLED,
+				)
 			})
 
 			ws.on('message', (msg: WebSocket.RawData) => {

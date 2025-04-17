@@ -44,7 +44,7 @@ export const handleMessage = (self: ModuleInstance, msg: CallStateUpdate | Calls
 		}
 		const channelNameVariable = Variables.CHANNEL_X_NAME.replace('X', call.index.toString())
 		const variableChannelName = self.getVariableValue(channelNameVariable)
-		const newName = call.productionName + '/' + call.lineName
+		const newName = call.lineName
 		if (variableChannelName !== newName) {
 			updates[channelNameVariable] = newName
 		}
@@ -55,7 +55,7 @@ export const handleMessage = (self: ModuleInstance, msg: CallStateUpdate | Calls
 		const updates = getCallStateVariableUpdates(msg)
 		if (Object.keys(updates).length) {
 			self.setVariableValues(updates)
-			self.checkFeedbacks(Feedbacks.GET_BUTTON_VARIABLE_STATE, Feedbacks.GET_BUTTON_CHANNEL_NAME)
+			self.checkFeedbacks(Feedbacks.GET_INPUT_MUTE_BUTTON_STATUS, Feedbacks.GET_OUTPUT_MUTE_BUTTON_STATUS)
 		}
 	} else if (msg.type === MessageTypes.CALLS_STATE_UPDATE) {
 		const variableIsGlobalMute = self.getVariableValue(Variables.GLOBAL_MUTE)
@@ -78,14 +78,16 @@ export const handleMessage = (self: ModuleInstance, msg: CallStateUpdate | Calls
 					...updates,
 					[Variables.CHANNEL_X_INPUT_MUTE.replace('X', excessChannelIndex.toString())]: true,
 					[Variables.CHANNEL_X_OUTPUT_MUTE.replace('X', excessChannelIndex.toString())]: true,
-					[Variables.CHANNEL_X_NAME.replace('X', excessChannelIndex.toString())]: excessChannelIndex,
+					[Variables.CHANNEL_X_NAME.replace('X', excessChannelIndex.toString())]: 'Call ' + excessChannelIndex,
 				}
 			}
 		}
 		if (Object.keys(updates).length) {
 			self.setVariableValues(updates)
 			self.checkFeedbacks(
-				Feedbacks.GET_BUTTON_VARIABLE_STATE,
+				Feedbacks.GET_INPUT_MUTE_BUTTON_STATUS,
+				Feedbacks.GET_OUTPUT_MUTE_BUTTON_STATUS,
+				Feedbacks.GET_GLOBAL_INPUT_MUTE_BUTTON_STATUS,
 				Feedbacks.GET_BUTTON_CHANNEL_NAME,
 				Feedbacks.IS_BUTTON_DISABLED,
 			)
