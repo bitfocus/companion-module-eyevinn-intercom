@@ -125,7 +125,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 			style: {
 				...defaultStyles,
 				text: 'Global',
-				png64: unmutedInputIcon,
+				png64: mutedInputIcon,
 			},
 			feedbacks: [
 				{
@@ -164,7 +164,7 @@ export function UpdatePresets(self: ModuleInstance): void {
 		style: {
 			...defaultStyles,
 			text: 'X',
-			png64: unmutedInputIcon,
+			png64: mutedInputIcon,
 		},
 		feedbacks: [
 			{

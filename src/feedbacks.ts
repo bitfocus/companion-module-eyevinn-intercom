@@ -46,12 +46,15 @@ const defaultCallback = (
 		channelIndex = self.getVariableValue(Variables.SELECTED_CHANNEL) || 0
 	}
 	const name = self.getVariableValue(Variables.CHANNEL_X_NAME.replace('X', channelIndex.toString()))?.toString()
-	if (!channelIndex || isButtonDisabled(channelIndex, self)) {
+	if (isButtonDisabled(channelIndex, self)) {
 		return {
 			text: name,
 			png64: disabledIcon,
 			color: combineRgb(133, 133, 133),
 		}
+	}
+	if (!Number(channelIndex)) {
+		return {}
 	}
 	const inputMuted = self.getVariableValue(variableName.replace('X', channelIndex.toString()))
 	if (inputMuted) {
