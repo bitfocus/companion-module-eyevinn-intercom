@@ -4,6 +4,7 @@ import { ChannelXVariables, Variables } from './variables.js'
 export enum Feedbacks {
 	GET_BUTTON_VARIABLE_STATE = 'GetButtonVariableState',
 	IS_BUTTON_DISABLED = 'IsButtonDisabled',
+	GET_BUTTON_CHANNEL_NAME = 'GetButtonChannelName',
 }
 
 export function UpdateFeedbacks(self: ModuleInstance): void {
@@ -48,7 +49,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					label: 'Channel Index',
 					default: 0,
 					min: 0,
-					max: 18,
+					max: 8,
 				},
 			],
 			callback: async (feedback) => {
@@ -60,6 +61,33 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				}
 				const numberOfCalls = self.getVariableValue(Variables.NUMBER_OF_CALLS) || 0
 				return !(channelIndex <= numberOfCalls)
+			},
+		},
+		[Feedbacks.GET_BUTTON_CHANNEL_NAME]: {
+			name: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+			type: 'advanced',
+			options: [
+				{
+					id: 'channelIndex',
+					type: 'number',
+					label: 'Channel Index',
+					default: 0,
+					min: 0,
+					max: 8,
+				},
+			],
+			callback: async (feedback) => {
+				let channelIndex = feedback.options.channelIndex
+				if (!channelIndex) {
+					channelIndex = self.getVariableValue(Variables.SELECTED_CHANNEL) || 0
+				}
+				const channelName =
+					self.getVariableValue(Variables.CHANNEL_X_NAME.replace('X', channelIndex.toString()))?.toString() || '0'
+				console.log('NUUUU')
+				console.log(channelName)
+				return {
+					text: channelName,
+				}
 			},
 		},
 	})

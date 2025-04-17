@@ -28,18 +28,18 @@ export enum GlobalPresetCategories {
 }
 
 export enum ChannelPresetCategories {
-	ChannelOneButtons = 'Channel 1 Buttons',
-	ChannelTwoButtons = 'Channel 2 Buttons',
-	ChannelThreeButtons = 'Channel 3 Buttons',
-	ChannelFourButtons = 'Channel 4 Buttons',
-	ChannelFiveButtons = 'Channel 5 Buttons',
-	ChannelSixButtons = 'Channel 6 Buttons',
-	ChannelSevenButtons = 'Channel 7 Buttons',
-	ChannelEightButtons = 'Channel 8 Buttons',
+	ChannelOneButtons = 'Call 1 Buttons',
+	ChannelTwoButtons = 'Call 2 Buttons',
+	ChannelThreeButtons = 'Call 3 Buttons',
+	ChannelFourButtons = 'Call 4 Buttons',
+	ChannelFiveButtons = 'Call 5 Buttons',
+	ChannelSixButtons = 'Call 6 Buttons',
+	ChannelSevenButtons = 'Call 7 Buttons',
+	ChannelEightButtons = 'Call 8 Buttons',
 }
 
 export enum ChannelXPresetCategory {
-	ChannelXButtons = 'Channel X Buttons',
+	ChannelXButtons = 'Call X Buttons',
 }
 
 export const PresetCategories = { ...GlobalPresetCategories, ...ChannelPresetCategories, ...ChannelXPresetCategory }
@@ -376,6 +376,10 @@ export function UpdatePresets(self: ModuleInstance): void {
 			},
 			feedbacks: [
 				{
+					feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					options: { channelIndex: index },
+				},
+				{
 					feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
 					options: { variableId: Variables.CHANNEL_X_INPUT_MUTE.replace('X', index.toString()) },
 					style: {
@@ -418,6 +422,10 @@ export function UpdatePresets(self: ModuleInstance): void {
 				show_topbar: false,
 			},
 			feedbacks: [
+				{
+					feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					options: { channelIndex: index },
+				},
 				{
 					feedbackId: Feedbacks.GET_BUTTON_VARIABLE_STATE,
 					options: { variableId: Variables.CHANNEL_X_OUTPUT_MUTE.replace('X', index.toString()) },
@@ -462,6 +470,10 @@ export function UpdatePresets(self: ModuleInstance): void {
 			},
 			feedbacks: [
 				{
+					feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					options: { channelIndex: index },
+				},
+				{
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: { channelIndex: index },
 					style: {
@@ -503,6 +515,10 @@ export function UpdatePresets(self: ModuleInstance): void {
 			},
 			feedbacks: [
 				{
+					feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					options: { channelIndex: index },
+				},
+				{
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: { channelIndex: index },
 					style: {
@@ -539,6 +555,10 @@ export function UpdatePresets(self: ModuleInstance): void {
 			},
 			feedbacks: [
 				{
+					feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					options: { channelIndex: index },
+				},
+				{
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: { channelIndex: index },
 					style: {
@@ -561,10 +581,10 @@ export function UpdatePresets(self: ModuleInstance): void {
 		}
 		presets[PresetTypes.ChannelSelect + index] = {
 			category: PresetCategories.ChannelXButtons,
-			name: 'Channel ' + index,
+			name: 'Call ' + index,
 			type: 'button',
 			style: {
-				text: 'Channel ' + index.toString(),
+				text: 'Call ' + index.toString(),
 				size: '14',
 				alignment: 'center:center',
 				color: combineRgb(255, 255, 255),
@@ -572,6 +592,10 @@ export function UpdatePresets(self: ModuleInstance): void {
 				show_topbar: false,
 			},
 			feedbacks: [
+				{
+					feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					options: { channelIndex: index },
+				},
 				{
 					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
 					options: { channelIndex: index },

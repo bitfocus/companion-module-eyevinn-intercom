@@ -11,6 +11,7 @@ export enum GlobalVariables {
 export enum ChannelXVariables {
 	CHANNEL_X_INPUT_MUTE = 'ChannelXInputMute',
 	CHANNEL_X_OUTPUT_MUTE = 'ChannelXOutputMute',
+	CHANNEL_X_NAME = 'ChannelXName',
 }
 
 export const Variables = { ...GlobalVariables, ...ChannelXVariables }
@@ -21,7 +22,7 @@ interface VariableDefinition {
 }
 
 interface VariableValues {
-	[key: string]: boolean | number
+	[key: string]: boolean | number | string
 }
 
 const defaultVariables: VariableDefinition[] = [
@@ -31,7 +32,7 @@ const defaultVariables: VariableDefinition[] = [
 	{ variableId: Variables.NUMBER_OF_CALLS, name: Variables.NUMBER_OF_CALLS },
 ]
 
-export function UpdateVariableDefinitions(self: ModuleInstance): void {
+export const getDefaultVariables = (): { definitions: VariableDefinition[]; values: VariableValues } => {
 	const variableDefinitions: VariableDefinition[] = defaultVariables
 	const variableValues: VariableValues = {
 		[Variables.IS_CONNECTED]: false,
@@ -39,16 +40,34 @@ export function UpdateVariableDefinitions(self: ModuleInstance): void {
 		[Variables.SELECTED_CHANNEL]: 0,
 		[Variables.NUMBER_OF_CALLS]: 0,
 	}
-
 	Object.values(ChannelPresetCategories).forEach((_val, index) => {
 		Object.values(ChannelXVariables).forEach((channelXVariable) => {
-			const variableId = channelXVariable.replace('X', index.toString())
-			const variableValue = channelXVariable === ChannelXVariables.CHANNEL_X_INPUT_MUTE
+			const variableId = channelXVariable.replace('X', (index + 1).toString())
+			let variableValue
+			switch (channelXVariable) {
+				case ChannelXVariables.CHANNEL_X_INPUT_MUTE:
+					variableValue = true
+					break
+				case ChannelXVariables.CHANNEL_X_OUTPUT_MUTE:
+					variableValue = false
+					break
+				default:
+				case ChannelXVariables.CHANNEL_X_NAME:
+					variableValue = (index + 1).toString()
+					break
+			}
 			variableDefinitions.push({ variableId, name: variableId })
 			variableValues[variableId] = variableValue
 		})
 	})
+	return {
+		definitions: variableDefinitions,
+		values: variableValues,
+	}
+}
 
-	self.setVariableDefinitions(variableDefinitions)
-	self.setVariableValues(variableValues)
+export function UpdateVariableDefinitions(self: ModuleInstance): void {
+	const defaultVariables = getDefaultVariables()
+	self.setVariableDefinitions(defaultVariables.definitions)
+	self.setVariableValues(defaultVariables.values)
 }

@@ -3,7 +3,7 @@ import { ActionMessage, UpdateActions } from './actions.js'
 import { GetConfigFields, ModuleConfig } from './config.js'
 import { Feedbacks, UpdateFeedbacks } from './feedbacks.js'
 import { UpgradeScripts } from './upgrades.js'
-import { UpdateVariableDefinitions, Variables } from './variables.js'
+import { getDefaultVariables, UpdateVariableDefinitions, Variables } from './variables.js'
 
 import WebSocket, { WebSocketServer } from 'ws'
 import { UpdatePresets } from './presets.js'
@@ -54,7 +54,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 
 			ws.on('close', () => {
 				this.clients.delete(ws)
-				this.setVariableValues({ [Variables.IS_CONNECTED]: false })
+				this.setVariableValues(getDefaultVariables().values)
 				this.checkFeedbacks(Feedbacks.IS_BUTTON_DISABLED)
 			})
 
