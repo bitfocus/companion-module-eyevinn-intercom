@@ -5,6 +5,7 @@ export enum GlobalVariables {
 	IS_CONNECTED = 'IsConnected',
 	GLOBAL_MUTE = 'GlobalMute',
 	SELECTED_CHANNEL = 'SelectedChannel',
+	PREVIOUSLY_SELECTED_CHANNEL = 'PreviouslySelectedChannel',
 	NUMBER_OF_CALLS = 'NumberOfCalls',
 }
 
@@ -29,6 +30,7 @@ const defaultVariables: VariableDefinition[] = [
 	{ variableId: Variables.IS_CONNECTED, name: Variables.IS_CONNECTED },
 	{ variableId: Variables.GLOBAL_MUTE, name: Variables.GLOBAL_MUTE },
 	{ variableId: Variables.SELECTED_CHANNEL, name: Variables.SELECTED_CHANNEL },
+	{ variableId: Variables.PREVIOUSLY_SELECTED_CHANNEL, name: Variables.PREVIOUSLY_SELECTED_CHANNEL },
 	{ variableId: Variables.NUMBER_OF_CALLS, name: Variables.NUMBER_OF_CALLS },
 ]
 
@@ -38,6 +40,7 @@ export const getDefaultVariables = (): { definitions: VariableDefinition[]; valu
 		[Variables.IS_CONNECTED]: false,
 		[Variables.GLOBAL_MUTE]: false,
 		[Variables.SELECTED_CHANNEL]: 0,
+		[Variables.PREVIOUSLY_SELECTED_CHANNEL]: 0,
 		[Variables.NUMBER_OF_CALLS]: 0,
 	}
 	Object.values(ChannelPresetCategories).forEach((_val, index) => {

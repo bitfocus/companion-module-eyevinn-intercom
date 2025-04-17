@@ -42,11 +42,20 @@ export function UpdateActions(self: ModuleInstance): void {
 		const optionsChannelIndex = action.options.channelIndex?.toString()
 		const selectedChannelIndex = self.getVariableValue(Variables.SELECTED_CHANNEL)?.toString()
 		const channelIndex: string | undefined = optionsChannelIndex ?? selectedChannelIndex
-		if (!channelIndex) return
-		self.emitMessage({
-			action: actionType,
-			index: Number(channelIndex),
-		})
+		if (actionType === ActionTypes.PushToTalkStop && !Number(channelIndex)) {
+			const previouslySelectedChannelIndex = self.getVariableValue(Variables.PREVIOUSLY_SELECTED_CHANNEL)?.toString()
+			if (Number(previouslySelectedChannelIndex)) {
+				self.emitMessage({
+					action: actionType,
+					index: Number(previouslySelectedChannelIndex),
+				})
+			}
+		} else if (Number(channelIndex)) {
+			self.emitMessage({
+				action: actionType,
+				index: Number(channelIndex),
+			})
+		}
 	}
 
 	const actions: { [key in ActionTypes]: CompanionActionDefinition } = {
@@ -132,7 +141,11 @@ export function UpdateActions(self: ModuleInstance): void {
 			name: 'Set selected call',
 			options: [channelIndexActionOptions],
 			callback: async (action: CompanionActionEvent) => {
-				self.setVariableValues({ [Variables.SELECTED_CHANNEL]: action.options.channelIndex?.toString() })
+				const previouslySelectedChannel = self.getVariableValue(Variables.SELECTED_CHANNEL)
+				self.setVariableValues({
+					[Variables.PREVIOUSLY_SELECTED_CHANNEL]: previouslySelectedChannel,
+					[Variables.SELECTED_CHANNEL]: action.options.channelIndex?.toString(),
+				})
 				self.checkFeedbacks(
 					Feedbacks.GET_INPUT_MUTE_BUTTON_STATUS,
 					Feedbacks.GET_OUTPUT_MUTE_BUTTON_STATUS,
