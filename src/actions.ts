@@ -10,15 +10,15 @@ import type { ModuleInstance } from './main.js'
 import { Variables } from './variables.js'
 
 export enum ActionTypes {
-	OpenIntercom = 'OpenIntercom',
-	ToggleInputMute = 'ToggleInputMute',
-	ToggleOutputMute = 'ToggleOutputMute',
-	ToggleGlobalMute = 'ToggleGlobalMute',
-	IncreaseVolume = 'IncreaseVolume',
-	DecreaseVolume = 'DecreaseVolume',
-	PushToTalkStart = 'PushToTalkStart',
-	PushToTalkStop = 'PushToTalkStop',
-	SetSelectedChannel = 'SetSelectedChannel',
+	OpenIntercom = 'open_intercom',
+	ToggleInputMute = 'toggle_input_mute',
+	ToggleOutputMute = 'toggle_output_mute',
+	ToggleGlobalMute = 'toggle_global_mute',
+	IncreaseVolume = 'increase_volume',
+	DecreaseVolume = 'decrease_volume',
+	PushToTalkStart = 'push_to_talk_start',
+	PushToTalkStop = 'push_to_talk_stop',
+	SetSelectedChannel = 'set_selected_channel',
 }
 
 export type ActionMessage = {
