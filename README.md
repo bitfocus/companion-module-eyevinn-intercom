@@ -1,12 +1,12 @@
 # companion-module-eyevinn intercom
 
-Eyevinn Open Intercom Companion Module is a tool that allows you to use the Intercom controls (mute, push to talk, etc...) with an Elgato Streamdeck. This requires having an Eyevinn Intercom running.
+Eyevinn Open Intercom Companion Module is a tool that allows you to use the Intercom controls (mute, push to talk, etc...) with an Elgato Stream Deck. This requires having an instance of Eyevinn Open Intercom running.
 
 ## Running Bitfocus Companion
 
-### Instalation
+### Installation
 
-To run the Bitfocus Companion Module you need to have Bitfocus Companion installed locally. You can install it [here](https://user.bitfocus.io/download).
+To run the Bitfocus Companion Module you need to have Bitfocus Companion installed locally. You can install it [here](https://bitfocus.io/companion).
 
 ### Starting Bitfocus Companion
 
@@ -25,7 +25,7 @@ If you have a local version of a module you wish to run simply add the PARENT fo
 
 Executing a `yarn` command should perform all necessary steps to develop the module, if it does not then follow the steps below.
 
-The module can be built once with `yarn build`. This should be enough to get the module to be loadable by companion.
+The module can be built once with `yarn build`. This should be enough to make the module loadable by Companion.
 
 ### Development
 
@@ -33,23 +33,23 @@ While developing the module, by using `yarn dev` the compiler will be run in wat
 
 ## Using the module
 
-[Here](https://www.google.com) is a guide on how to use the Intercom and configure the Companion Module. There are some predefined configurations (page layouts) available in the "configs" folder in this repo. You can easily import them into Bitfocus.
+There are some predefined configurations (page layouts) available in the "configs" folder in this repo. You can easily import them into Bitfocus.
 
 To use the Eyevinn Open Intercom Module, under the "Connections" tab search for "Eyevinn Intercom" and the press "Add" button. You can then specify on what port you wish to expose the Websocket Server that communicates with the Intercom.
 
-Once you have added the module, to configure your Elgato Streamdeck simply drag and drop preset buttons onto your page under the "Buttons" tab.
+Once you have added the module, to configure your Elgato Stream Deck simply drag and drop preset buttons onto your page under the "Buttons" tab.
 
 ### Presets
 
 #### Global Buttons
 
-- Status - Displays the connection status between the module and the Intercom
+- Status - Displays the connection status between the module and Open Intercom
 - Open Intercom - Opens the intercom website (requires you to configure the URL path in the button)
 - Global Input Mute - Mute/Unmmute all calls
 
 #### Call 1-8 Buttons
 
-These buttons allow you to use the controls for a call at a specific index. The first call in your list of calls will be Call 1. The name of the call line will be displayed on the button once you are connected to the Interom.
+These buttons allow you to use the controls for a call at a specific index. The first call in your list of calls will be Call 1. The name of the call line will be displayed on the button once you are connected to Open Intercom.
 
 - Input Mute - Mute/Unmute microphone
 - Output Mute - Mute/Unmute speaker
@@ -59,7 +59,7 @@ These buttons allow you to use the controls for a call at a specific index. The 
 
 #### Call X Buttons
 
-Here you can see buttons named Call 1 to 8. Holding down one of these buttons allows you to use the controls for that call with the "X" buttons. The name of the call line will be displayed on the button once you are connected to the Interom. \
+Here you can see buttons named Call 1 to 8. Holding down one of these buttons allows you to use the controls for that call with the "X" buttons. The name of the call line will be displayed on the button once you are connected to Open Intercom. \
 E.g. holding down "Call 2" and then pressing "Volume up X" will increase the volume of Call 2.
 
 ## Actions
