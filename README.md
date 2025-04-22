@@ -35,7 +35,9 @@ While developing the module, by using `yarn dev` the compiler will be run in wat
 
 [Here](https://www.google.com) is a guide on how to use the Intercom and configure the Companion Module. There are some predefined configurations (page layouts) available in the "configs" folder in this repo. You can easily import them into Bitfocus.
 
-To configure your Elgato Streamdeck simply drag and drop preset buttons onto your page under the "Buttons" tab.
+To use the Eyevinn Open Intercom Module, under the "Connections" tab search for "Eyevinn Intercom" and the press "Add" button. You can then specify on what port you wish to expose the Websocket Server that communicates with the Intercom.
+
+Once you have added the module, to configure your Elgato Streamdeck simply drag and drop preset buttons onto your page under the "Buttons" tab.
 
 ### Presets
 

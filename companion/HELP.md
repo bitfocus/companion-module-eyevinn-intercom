@@ -6,8 +6,6 @@ Eyevinn Open Intercom Companion Module allows you to use the Eyevinn Intercom co
 
 ## Configuration
 
-To configure your Elgato Streamdeck simply drag and drop preset buttons onto your page under the "Buttons" tab.
-
 ### Presets
 
 #### Global Buttons
