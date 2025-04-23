@@ -17,11 +17,6 @@ import {
 } from './icons.js'
 import { Feedbacks } from './feedbacks.js'
 
-// rgb(111, 216, 79)
-// rgb(249, 108, 108)
-// rgb(133, 133, 133)
-// #59cbe8
-
 export enum GlobalPresetCategories {
 	GlobalButtons = 'Global Buttons',
 }

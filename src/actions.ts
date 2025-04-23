@@ -26,7 +26,7 @@ export type ActionMessage = {
 	index?: InputValue
 }
 
-export const defaultOpenUrl = 'https://intercom-dev.app.eyevinn.technology/'
+export const defaultOpenUrl = 'https://github.com/Eyevinn/companion-module-eyevinn-intercom'
 
 const channelIndexActionOptions: SomeCompanionActionInputField = {
 	id: 'channelIndex',
