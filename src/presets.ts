@@ -8,12 +8,14 @@ import {
 	disabledDecreaseVolumeIcon,
 	disabledIncreaseVolumeIcon,
 	disabledPTTIcon,
+	disabledVolumeIcon,
 	disconnectedIcon,
 	increaseVolumeIcon,
 	mutedInputIcon,
 	PTTEnabledIcon,
 	unmutedInputIcon,
 	unmutedOutputIcon,
+	volumeIcon,
 } from './icons.js'
 import { Feedbacks } from './feedbacks.js'
 
@@ -43,6 +45,7 @@ export enum PresetTypes {
 	ToggleOutputMute = 'toggle_output_mute',
 	IncreaseVolume = 'increase_volume',
 	DecreaseVolume = 'decrease_volume',
+	RotateVolume = 'rotate_volume',
 	ChannelSelect = 'channel_select',
 	PushToTalk = 'push_to_talk',
 	ToggleGlobalMute = 'toggle_global_mute',
@@ -278,6 +281,55 @@ export function UpdatePresets(self: ModuleInstance): void {
 			},
 		],
 	}
+	presets[PresetTypes.RotateVolume + 'X'] = {
+		category: PresetCategories.ChannelXButtons,
+		name: 'Rotate Volume X',
+		type: 'button',
+		options: {
+			rotaryActions: true,
+		},
+		style: {
+			...defaultStyles,
+			text: 'X',
+			png64: volumeIcon,
+		},
+		feedbacks: [
+			{
+				feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+				options: {},
+				style: {
+					...defaultDisabledStyles,
+					png64: disabledVolumeIcon,
+				},
+			},
+			{
+				feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+				options: {},
+			},
+		],
+		steps: [
+			{
+				down: [],
+				up: [],
+				rotate_left: [
+					{
+						actionId: ActionTypes.DecreaseVolume,
+						options: {
+							velocity: 1,
+						},
+					},
+				],
+				rotate_right: [
+					{
+						actionId: ActionTypes.IncreaseVolume,
+						options: {
+							velocity: 1,
+						},
+					},
+				],
+			},
+		],
+	}
 	presets[PresetTypes.PushToTalk + 'X'] = {
 		category: PresetCategories.ChannelXButtons,
 		name: 'Push To Talk X',
@@ -483,6 +535,57 @@ export function UpdatePresets(self: ModuleInstance): void {
 						},
 					],
 					up: [],
+				},
+			],
+		}
+		presets[PresetTypes.RotateVolume + index] = {
+			category,
+			name: 'Rotate Volume ' + index,
+			type: 'button',
+			options: {
+				rotaryActions: true,
+			},
+			style: {
+				...defaultStyles,
+				text: index.toString(),
+				png64: volumeIcon,
+			},
+			feedbacks: [
+				{
+					feedbackId: Feedbacks.IS_BUTTON_DISABLED,
+					options: { channelIndex: index },
+					style: {
+						...defaultDisabledStyles,
+						png64: disabledVolumeIcon,
+					},
+				},
+				{
+					feedbackId: Feedbacks.GET_BUTTON_CHANNEL_NAME,
+					options: { channelIndex: index },
+				},
+			],
+			steps: [
+				{
+					down: [],
+					up: [],
+					rotate_left: [
+						{
+							actionId: ActionTypes.DecreaseVolume,
+							options: {
+								channelIndex: index,
+								velocity: 1,
+							},
+						},
+					],
+					rotate_right: [
+						{
+							actionId: ActionTypes.IncreaseVolume,
+							options: {
+								channelIndex: index,
+								velocity: 1,
+							},
+						},
+					],
 				},
 			],
 		}
