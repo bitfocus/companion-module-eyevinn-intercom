@@ -38,13 +38,14 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		}
 
 		const port = parseInt(this.config.port || '12345', 10)
+		const host = this.config.host || '0.0.0.0'
 
 		if (this.wss) {
 			this.wss.close()
 			this.log('info', 'Closing existing WebSocket server')
 		}
 
-		this.wss = new WebSocketServer({ port })
+		this.wss = new WebSocketServer({ host, port })
 
 		this.wss.on('connection', (ws) => {
 			this.clients.add(ws)
@@ -75,7 +76,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		})
 
 		this.wss.on('listening', () => {
-			this.log('info', `WebSocket server is running on port ${port}`)
+			this.log('info', `WebSocket server is running on ${host}:${port}`)
 		})
 
 		this.wss.on('error', (err) => {
