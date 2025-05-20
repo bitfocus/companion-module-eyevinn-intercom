@@ -10,7 +10,7 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 		{
 			type: 'textinput',
 			id: 'host',
-			label: 'Bind Interface',
+			label: 'WebSocket Bind Interface',
 			default: '0.0.0.0',
 			width: 12,
 		},
