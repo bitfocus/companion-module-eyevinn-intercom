@@ -3,6 +3,9 @@
 	"version": "1.0.1",
 	"main": "dist/main.js",
 	"type": "module",
+	"exports": {
+		".": "./dist/main.js"
+	},
 	"scripts": {
 		"postinstall": "husky",
 		"format": "prettier -w .",
