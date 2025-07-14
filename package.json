@@ -1,6 +1,6 @@
 {
 	"name": "lucas-lol",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"main": "dist/main.js",
 	"type": "module",
 	"exports": {
@@ -16,7 +16,7 @@
 		"build:watch": "tsc -p tsconfig.json --watch",
 		"lint:raw": "eslint",
 		"lint": "run lint:raw .",
-                "postversion": "git push && git push --tags"
+		"postversion": "git push && git push --tags"
 	},
 	"license": "MIT",
 	"repository": {
