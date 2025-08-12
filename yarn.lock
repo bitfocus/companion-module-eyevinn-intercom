@@ -2063,9 +2063,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eyevinn-intercom@workspace:.":
+"lucas-lol@workspace:.":
   version: 0.0.0-use.local
-  resolution: "eyevinn-intercom@workspace:."
+  resolution: "lucas-lol@workspace:."
   dependencies:
     "@companion-module/base": "npm:~1.11.3"
     "@companion-module/tools": "npm:^2.2.2"
