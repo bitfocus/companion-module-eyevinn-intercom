@@ -21,11 +21,10 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/bitfocus/companion-module-your-module-name.git"
+		"url": "git+https://github.com/bitfocus/companion-module-eyevinn-intercom.git"
 	},
 	"dependencies": {
 		"@companion-module/base": "~1.11.3",
-		"open": "^10.1.0",
 		"ws": "^8.18.1"
 	},
 	"devDependencies": {
