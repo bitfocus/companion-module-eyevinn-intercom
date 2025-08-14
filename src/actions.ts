@@ -4,7 +4,7 @@ import {
 	InputValue,
 	SomeCompanionActionInputField,
 } from '@companion-module/base'
-import open from 'open'
+import { spawn } from 'node:child_process'
 import { Feedbacks } from './feedbacks.js'
 import type { ModuleInstance } from './main.js'
 import { Variables } from './variables.js'
@@ -27,6 +27,17 @@ export type ActionMessage = {
 }
 
 export const defaultOpenUrl = 'https://github.com/Eyevinn/companion-module-eyevinn-intercom'
+
+function openExternal(url: string): void {
+	const opts = { detached: true, stdio: 'ignore' as const }
+	if (process.platform === 'win32') {
+		spawn('cmd', ['/c', 'start', '', url], opts).unref()
+	} else if (process.platform === 'darwin') {
+		spawn('open', [url], opts).unref()
+	} else {
+		spawn('xdg-open', [url], opts).unref()
+	}
+}
 
 const channelIndexActionOptions: SomeCompanionActionInputField = {
 	id: 'channelIndex',
@@ -73,12 +84,8 @@ export function UpdateActions(self: ModuleInstance): void {
 			callback: async (action: CompanionActionEvent) => {
 				const URL = action.options.url?.toString()
 				if (URL) {
-					return open(URL).then(
-						() => console.info('Successfully opened Intercom'),
-						() => {
-							console.error('Unsuccessfully opened Intercom')
-						},
-					)
+					openExternal(URL)
+					console.info('Attempted to open Intercom')
 				}
 			},
 		},
